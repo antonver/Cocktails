@@ -1,0 +1,44 @@
+header {
+    position: fixed;
+    height:4rem;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transition: transform 0.6s ease-in-out;
+    z-index: 1000;
+    background-color: black; /* Добавим полупрозрачный черный фон для контраста */
+    color: white; /* Белый текст */
+    font-size: calc(10px + 2vmin);
+    font-family: 'Inter', sans-serif; /* Используем шрифт Inter */
+    text-align: center; /* Выравнивание текста по центру */
+    font-weight: bold; /* Жирный текст */
+    padding: 10px 0; /* Добавим немного отступов для улучшения внешнего вида */
+}
+
+header.hidden {
+    transform: translateY(-100%);
+}
+
+nav ul {
+    list-style: none; /* Убираем маркеры списка */
+    padding: 0; /* Убираем внутренние отступы */
+    margin: 0; /* Убираем внешние отступы */
+    display: flex; /* Используем flexbox для горизонтального выравнивания элементов */
+    justify-content: center; /* Центрируем элементы по горизонтали */
+}
+
+nav ul li {
+    margin: 0 15px; /* Добавляем отступы между элементами списка */
+}
+
+nav ul li a {
+    color: white; /* Белый текст для ссылок */
+    text-decoration: none; /* Убираем подчеркивание ссылок */
+    font-weight: bold; /* Жирный текст для ссылок */
+}
+
+nav ul li a:hover {
+    text-decoration: underline; /* Подчеркивание при наведении */
+}
+
+
