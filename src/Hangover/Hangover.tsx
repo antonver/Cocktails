@@ -10,7 +10,10 @@ import {
     TextRevealCard,
 } from "../RevealCard";
 
-const link = `http://localhost:8000/cocktails/?nonalcoholic=1&`;
+
+// @ts-ignore
+const link_all = import.meta.env.REACT_APP_API_URL;
+const link = `${link_all}?nonalcoholic=1&`;
 
 function fetchData(page) {
     return axios.get(page)
