@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+body, html {
+    margin: 0 ;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+}
+#root {
+    width: 100%;
+    margin: 0 0 0;
+    padding: 0;
+}
+
