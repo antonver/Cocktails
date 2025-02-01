@@ -9,9 +9,11 @@ export const TextRevealCard = ({
                                    revealText,
                                    children,
                                    className,
+                                   hangoverPush
                                }: {
     text: string;
     revealText: string;
+    hangoverPush:any;
     children?: React.ReactNode;
     className?: string;
 }) => {
@@ -60,6 +62,7 @@ export const TextRevealCard = ({
     return (
         <div
             onMouseEnter={mouseEnterHandler}
+            onClick={hangoverPush}
             onMouseLeave={mouseLeaveHandler}
             onMouseMove={mouseMoveHandler}
             onTouchStart={mouseEnterHandler}
@@ -95,7 +98,7 @@ export const TextRevealCard = ({
                         style={{
                             textShadow: "4px 4px 15px rgba(0,0,0,0.5)",
                         }}
-                        className="text-base sm:text-7xl py-10 font-bold text-center text-transparent bg-clip-text bg-gradient-to-b text-white"
+                        className="text-base sm:text-7xl py-10 font-bold text-center text-transparent bg-clip-text bg-gradient-to-b text-white overflow-hidden"
                     >
                         {revealText}
                     </p>
@@ -111,7 +114,7 @@ export const TextRevealCard = ({
                 ></motion.div>
 
                 <div className=" overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,white,transparent)]">
-                    <p className="text-base sm:text-7xl py-10 font-bold text-center text-transparent bg-clip-text bg-gradient-to-b text-white">
+                    <p className="text-base sm:text-7xl py-10 font-bold text-center text-transparent bg-clip-text bg-gradient-to-b text-white  overflow-hidden">
                         {text}
                     </p>
                     <MemoizedStars/>

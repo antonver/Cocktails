@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 // @ts-ignore
 import image from "../assets/house-blank.svg";
-function Header({fridayPush}) {
+function Header() {
     const [isHidden, setIsHidden] = useState(false);
     const lastScrollY = useRef(0);
 
@@ -35,7 +35,7 @@ function Header({fridayPush}) {
             <nav className="flex justify-left space-x-6 py-2">
                 <button
                     onClick={reloadPage}
-                    className=" inline-flex h-8 animate-shimmer items-center justify-center rounded-md border border-purple-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-purple-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 "
+                    className=" inline-flex h-8 animate-shimmer items-center justify-center rounded-md border border-blue-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-blue-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 "
                 >
                     Home
                 </button>

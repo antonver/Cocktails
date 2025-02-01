@@ -7,8 +7,10 @@ import { cn } from "./lib/utils";
 export const EvervaultCard = ({
                                 text,
                                 className,
+    drunkPush
                               }: {
   text?: string;
+    drunkPush:any;
   className?: string;
 }) => {
   let mouseX = useMotionValue(0);
@@ -26,39 +28,44 @@ export const EvervaultCard = ({
     mouseX.set(clientX - left);
     mouseY.set(clientY - top);
 
-    const str = generateRandomString(1500);
+    const str = generateRandomString(10000);
     setRandomString(str);
   }
 
   return (
       <div
           className={cn(
-              "p-0.5 bg-transparent aspect-square flex items-center justify-center w-full h-full relative",
+              "p-0.5 bg-transparent aspect-square flex items-center justify-center w-full h-full relative ",
               className
           )}
       >
-        <div
-            onMouseMove={onMouseMove}
-            className="group/card w-full relative overflow-hidden bg-transparent flex items-center justify-center h-full"
-        >
-          <CardPattern
-              mouseX={mouseX}
-              mouseY={mouseY}
-              randomString={randomString}
-          />
-          <div className="relative z-10 flex items-center justify-center">
-            <div className="relative h-44 w-44 flex items-center justify-center text-white font-bold text-7xl">
-              <div className="absolute w-full h-full bg-white/[0.8] dark:bg-black/[0.8] blur-sm" />
-              <span className="dark:text-white text-black z-20">{text}</span>
-            </div>
+          <div
+              onMouseMove={onMouseMove}
+              className="group/card w-full relative overflow-hidden bg-transparent flex items-center justify-center h-full"
+          >
+              <CardPattern
+                  mouseX={mouseX}
+                  mouseY={mouseY}
+                  randomString={randomString}
+              />
+
+                  <div className="relative z-10 flex items-center justify-center" onClick={drunkPush}>
+                      <div
+                          className="relative h-44 w-44 flex items-center justify-center text-white font-bold text-7xl">
+                          <div className="absolute w-full h-full bg-white/[0.8] dark:bg-black/[0.8] blur-sm"/>
+
+                          <span className="dark:text-white text-black z-20">{text}</span>
+                      </div>
+                  </div>
           </div>
-        </div>
       </div>
-  );
+);
 };
 
-export function CardPattern({ mouseX, mouseY, randomString }: any) {
-  let maskImage = useMotionTemplate`radial-gradient(250px at ${mouseX}px ${mouseY}px, white, transparent)`;
+export function CardPattern({
+    mouseX, mouseY, randomString
+}: any) {
+    let maskImage = useMotionTemplate`radial-gradient(250px at ${mouseX}px ${mouseY}px, white, transparent)`;
   let style = { maskImage, WebkitMaskImage: maskImage };
 
   return (
