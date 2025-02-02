@@ -152,3 +152,8 @@ MEDIA_URL = '/media/'
 CORS_ALLOW_ALL_ORIGINS = True
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Add near STATIC_ROOT
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
