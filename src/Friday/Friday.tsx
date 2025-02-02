@@ -7,76 +7,88 @@ import axios from "axios";
 import SearchBar from "../components/SearchBar";
 import Cocktail from "../cards/Cocktail";
 
-// @ts-ignore
-const link = import.meta.env.REACT_APP_API_URL;
+// Define types for Cocktail and API response
+type CocktailType = {
+    id: string;
+    name: string;
+    image: string;
+};
 
+type ApiResponse = {
+    results: CocktailType[];
+    next: string | null;
+    previous: string | null;
+};
+
+// @ts-ignore
+const link = import.meta.env.VITE_API_URL;
+console.log(link);
 // Function to fetch data from the API
-function fetchData(page) {
-    return axios.get(page)
-        .then(response => response.data)
-        .catch(error => {
-            console.error("Error fetching data:", error);
-            return { results: [], next: null, previous: null };
-        });
+async function fetchData(page: string): Promise<ApiResponse> {
+    try {
+        const response = await axios.get<ApiResponse>(page);
+        console.log("API Response:", response.data); // Debugging: Log API response
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        return { results: [], next: null, previous: null }; // Ensure results is always an array
+    }
 }
 
 // Function to filter cocktails by name
-function filterByName(name) {
-    if (!name.trim()) {
-        // @ts-ignore
-        return Promise.resolve([]);
+async function filterByName(name: string): Promise<CocktailType[]> {
+    if (!name.trim()) return [];
+    try {
+        const response = await axios.get<ApiResponse>(`${link}?name=${name}`);
+        console.log("Filtered by Name Response:", response.data); // Debugging: Log API response
+        return response.data.results || []; // Ensure results is always an array
+    } catch (error) {
+        console.error("Error fetching filtered data:", error);
+        return [];
     }
-    return axios.get(`${link}?name=${name}`)
-        .then(response => response.data.results)
-        .catch(error => {
-            console.error("Error fetching filtered data:", error);
-            return [];
-        });
 }
 
 // Function to filter cocktails by ingredients
-function filterByIngredients(ingredients) {
-    if (!ingredients.trim()) {
-        // @ts-ignore
-        return Promise.resolve([]);
+async function filterByIngredients(ingredients: string): Promise<CocktailType[]> {
+    if (!ingredients.trim()) return [];
+    const query = ingredients
+        .split(" ")
+        .map((ingredient, index) => `ingredient${index + 1}=${ingredient.trim()}`)
+        .join("&");
+    try {
+        const response = await axios.get<ApiResponse>(`${link}?${query}`);
+        console.log("Filtered by Ingredients Response:", response.data); // Debugging: Log API response
+        return response.data.results || []; // Ensure results is always an array
+    } catch (error) {
+        console.error("Error fetching filtered data:", error);
+        return [];
     }
-    let query = "";
-    ingredients.split(" ").forEach((ingredient, index) => {
-        query += `ingredient${index + 1}=${ingredient.trim()}&`;
-    });
-    query = query.slice(0, -1); // Remove the trailing "&"
-    return axios.get(`${link}?${query}`)
-        .then(response => response.data.results)
-        .catch(error => {
-            console.error("Error fetching filtered data:", error);
-            return [];
-        });
 }
 
-function Friday({ fridayPush, isExpanded }) {
-    const [cocktails, setCocktails] = useState([]);
+function Friday({ fridayPush, isExpanded }: { fridayPush: () => void; isExpanded: boolean }) {
+    const [cocktails, setCocktails] = useState<CocktailType[]>([]); // Initialized as empty array
     const [cocktailName, setCocktailName] = useState("");
     const [page, setPage] = useState(link);
-    const [nextPage, setNextPage] = useState(null);
-    const [previousPage, setPreviousPage] = useState(null);
-    const [spesCocktail, setSpesCocktail] = useState(false);
+    const [nextPage, setNextPage] = useState<string | null>(null);
+    const [previousPage, setPreviousPage] = useState<string | null>(null);
+    const [spesCocktail, setSpesCocktail] = useState<CocktailType | false>(false);
     const [cocktailIngredients, setCocktailIngredients] = useState("");
     const [isLoading, setIsLoading] = useState(true);
 
     // Fetch cocktails when the page changes
     useEffect(() => {
-        // @ts-ignore
         const fetchCocktails = async () => {
-            setIsLoading(true); // Start loading
+            setIsLoading(true);
             try {
                 const data = await fetchData(page);
                 setNextPage(data.next);
                 setPreviousPage(data.previous);
-                setCocktails(data.results);
+                setCocktails(data.results || []); // Ensure results is always an array
             } catch (error) {
                 console.error("Error fetching data:", error);
+                setCocktails([]); // Fallback to empty array on error
             } finally {
-                setIsLoading(false); // Stop loading
+                setIsLoading(false);
             }
         };
         fetchCocktails();
@@ -84,48 +96,45 @@ function Friday({ fridayPush, isExpanded }) {
 
     // Filter cocktails by name
     useEffect(() => {
-        if (cocktailName.trim()) {
-            setIsLoading(true); // Start loading
-            filterByName(cocktailName)
-                .then(data => {
-                    setCocktails(data);
-                    setIsLoading(false); // Stop loading
-                })
-                .catch(error => {
+        const fetchFilteredCocktails = async () => {
+            if (cocktailName.trim()) {
+                setIsLoading(true);
+                try {
+                    const data = await filterByName(cocktailName);
+                    setCocktails(data || []); // Ensure results is always an array
+                } catch (error) {
                     console.error("Error fetching filtered data:", error);
-                    setIsLoading(false); // Stop loading on error
-                });
-        } else {
-            setIsLoading(false); // Reset loading if no search term
-        }
+                    setCocktails([]); // Fallback to empty array on error
+                } finally {
+                    setIsLoading(false);
+                }
+            }
+        };
+        fetchFilteredCocktails();
     }, [cocktailName]);
 
     // Filter cocktails by ingredients
     useEffect(() => {
-        if (cocktailIngredients.trim()) {
-            setIsLoading(true); // Start loading
-            filterByIngredients(cocktailIngredients)
-                .then(data => {
-                    setCocktails(data);
-                    setIsLoading(false); // Stop loading
-                })
-                .catch(error => {
+        const fetchFilteredCocktails = async () => {
+            if (cocktailIngredients.trim()) {
+                setIsLoading(true);
+                try {
+                    const data = await filterByIngredients(cocktailIngredients);
+                    setCocktails(data || []); // Ensure results is always an array
+                } catch (error) {
                     console.error("Error fetching filtered data:", error);
-                    setIsLoading(false); // Stop loading on error
-                });
-        } else {
-            setIsLoading(false); // Reset loading if no ingredients
-        }
+                    setCocktails([]); // Fallback to empty array on error
+                } finally {
+                    setIsLoading(false);
+                }
+            }
+        };
+        fetchFilteredCocktails();
     }, [cocktailIngredients]);
 
     // Pagination functions
     const next = () => nextPage && setPage(nextPage);
     const previous = () => previousPage && setPage(previousPage);
-
-    // Filtering and selection functions
-    const filterName = (name) => setCocktailName(name);
-    const chooseCocktail = (cocktail) => setSpesCocktail(cocktail);
-    const filterIngredients = (ingredients) => setCocktailIngredients(ingredients);
 
     // First view when not expanded
     const first = (
@@ -144,11 +153,11 @@ function Friday({ fridayPush, isExpanded }) {
     );
 
     // Cocktail detail view
-    const cocktailDetail = <Cocktail show={spesCocktail} component={"friday"} />;
+    const cocktailDetail = spesCocktail && <Cocktail show={spesCocktail} component="friday" />;
 
     // Main content
     if (!isExpanded) return first;
-    if (spesCocktail !== false) return cocktailDetail;
+    if (spesCocktail) return cocktailDetail;
 
     return (
         <>
@@ -160,7 +169,7 @@ function Friday({ fridayPush, isExpanded }) {
                             Friday
                         </div>
                     </div>
-                    <SearchBar filterName={filterName} filterIngredient={filterIngredients} />
+                    <SearchBar filterName={setCocktailName} filterIngredient={setCocktailIngredients} />
                 </LampContainer>
             </div>
             {isLoading ? (
@@ -170,22 +179,26 @@ function Friday({ fridayPush, isExpanded }) {
                 </div>
             ) : (
                 <div className="min-h-screen relative w-full bg-gradient-to-b from-slate-950 to-slate-800">
-                    <div className="flex flex-wrap flex-row justify-around p-8 gap-4">
-                        {cocktails.map((cocktail, index) => (
-                            <button key={cocktail.id || index} onClick={() => chooseCocktail(cocktail)}>
-                                <GlareCard>
-                                    <img
-                                        src={cocktail.image}
-                                        alt={cocktail.name}
-                                        className="w-full h-auto rounded-lg shadow-lg"
-                                    />
-                                    <h3 className="text-2xl text-white font-bold font-sans mt-4 text-center">
-                                        {cocktail.name}
-                                    </h3>
-                                </GlareCard>
-                            </button>
-                        ))}
-                    </div>
+                    {cocktails?.length > 0 ? (
+                        <div className="flex flex-wrap flex-row justify-around p-8 gap-4">
+                            {cocktails.map((cocktail) => (
+                                <button key={cocktail.id} onClick={() => setSpesCocktail(cocktail)}>
+                                    <GlareCard>
+                                        <img
+                                            src={cocktail.image}
+                                            alt={cocktail.name}
+                                            className="w-full h-auto rounded-lg shadow-lg"
+                                        />
+                                        <h3 className="text-2xl text-white font-bold font-sans mt-4 text-center">
+                                            {cocktail.name}
+                                        </h3>
+                                    </GlareCard>
+                                </button>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="text-white text-center mt-8">No cocktails found.</div>
+                    )}
                     <div className="flex justify-center mt-6 gap-4">
                         {previousPage && !cocktailName.trim() && !cocktailIngredients.trim() && (
                             <button
