@@ -4,20 +4,20 @@
   "version": "1.0.0",
   "type": "module",
   "engines": {
-    "node": ">=20.18.2",
+    "node": "20.18.2",
     "npm": ">=11.1.0"
   },
   "scripts": {
     "dev": "vite",
-    "build": "npm install --legacy-peer-deps && vite build",
+    "build": "npm install --force --legacy-peer-deps && vite build",
     "lint": "eslint . --ext js,jsx,ts,tsx",
     "preview": "vite preview",
     "start": "vite preview --host"
   },
   "dependencies": {
-    "@heroicons/react": "^2.2.2",
+    "@heroicons/react": "^2.1.1",
     "@react-three/fiber": "^9.2.6",
-    "@tabler/icons-react": "^3.29.0",
+    "@tabler/icons-react": "^4.0.1",
     "axios": "^1.7.9",
     "clsx": "^2.1.1",
     "framer-motion": "^12.4.0",
