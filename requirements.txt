@@ -34,8 +34,7 @@ optree==0.14.0
 packaging==24.2
 pillow==11.1.0
 protobuf==4.25.6
-psycopg2==2.9.10
-psycopg2-binary==2.9.10
+psycopg2-binary>=2.9.3
 Pygments==2.19.1
 PyJWT==2.10.1
 python-dotenv==1.0.1
