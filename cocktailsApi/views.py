@@ -8,33 +8,45 @@ from rest_framework.response import Response
 from rest_framework import status
 # Create your views here.
 
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from cocktailsApi.models import Cocktails
+from cocktailsApi.serializers import CocktailsSerializer
+
 class CocktailsViewSet(viewsets.ModelViewSet):
-    queryset = Cocktails.objects.all().order_by("id")  # Base ordered queryset
+    queryset = Cocktails.objects.all().order_by("id")
     serializer_class = CocktailsSerializer
 
     def get_queryset(self):
-        queryset = self.queryset  # Start with the ordered base queryset
+        queryset = self.queryset
 
         if self.action == 'list' and self.request.query_params:
             params = self.request.query_params
 
-            # Handle 'nonalcoholic' filter (correctly map to the 'alcoholic' field)
+            # Validate and sanitize 'nonalcoholic' filter
             nonalcoholic = params.get("nonalcoholic")
             if nonalcoholic is not None:
-                # Convert query param to boolean (e.g., "true" -> True)
-                queryset = queryset.filter(alcoholic=False)
+                nonalcoholic = nonalcoholic.lower() in ('true', '1', 'yes')
+                queryset = queryset.filter(alcoholic=not nonalcoholic)
 
-            # Handle 'name' filter
+            # Validate and sanitize 'name' filter
             name = params.get("name")
             if name:
-                queryset = queryset.filter(name__icontains=name.strip())
+                name = name.strip()
+                if name.isalnum():  # Example validation
+                    queryset = queryset.filter(name__icontains=name)
+                else:
+                    return Cocktails.objects.none()  # Return empty queryset for invalid input
 
-            # Handle other ingredient filters (e.g., ?ingredient1=lemon&ingredient2=lime)
+            # Validate and sanitize ingredient filters
             for key in params:
                 if key.startswith("ingredient"):
                     ingredient = params.get(key).strip()
-                    queryset = queryset.filter(ingredients__icontains=ingredient)
-        # 🔥 Reapply ordering after all filters to ensure pagination stability
+                    if ingredient.isalnum():  # Example validation
+                        queryset = queryset.filter(ingredients__icontains=ingredient)
+                    else:
+                        return Cocktails.objects.none()  # Return empty queryset for invalid input
+
         return queryset.order_by("id")
 
 
