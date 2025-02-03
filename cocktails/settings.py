@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',
     "cocktailsApi",
     'corsheaders',
-    'whitenoise.runserver_nostatic'
+    'whitenoise.runserver_nostatic',
+'drf_spectacular'
 ]
 
 MIDDLEWARE = [
@@ -141,9 +142,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 20,
-    # # 'DEFAULT_PERMISSION_CLASSES': [
-    # #     'rest_framework.permissions.IsAuthenticatedOrReadOnly'
-    # ]
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+     'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+    ]
 }
 
 MEDIA_ROOT = BASE_DIR / "media/"
@@ -153,7 +155,4 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Add near STATIC_ROOT
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
+
