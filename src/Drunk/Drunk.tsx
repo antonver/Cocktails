@@ -33,7 +33,7 @@ function Drunk({ drunkPush, isExpanded }) {
         formData.append('photo', file); // Match the backend's expected field name
 
         try {
-            const response = await fetch('http://localhost:8000/drunk', {
+            const response = await fetch('/choreo-apis/cocktails/backend/v1/drunk', {
                 method: 'POST',
                 body: formData,
             });

@@ -21,8 +21,8 @@ type ApiResponse = {
 };
 
 // @ts-ignore
-const link = import.meta.env.VITE_API_URL;
-console.log(link);
+const link = "/choreo-apis/cocktails/backend/v1";
+
 // Function to fetch data from the API
 async function fetchData(page: string): Promise<ApiResponse> {
     try {

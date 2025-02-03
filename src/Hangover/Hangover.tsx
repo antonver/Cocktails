@@ -8,7 +8,7 @@ import { TextRevealCard } from "../RevealCard";
 
 // Access environment variable
 // For Vite:
-const link_all = import.meta.env.VITE_API_URL;
+const link_all = "/choreo-apis/cocktails/backend/v1"
 // For Create React App:
 // const link_all = process.env.REACT_APP_API_URL;
 
