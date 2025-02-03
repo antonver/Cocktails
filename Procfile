@@ -1,0 +1,1 @@
+web: gunicorn cocktailsApi.wsgi --workers=3
