@@ -41,3 +41,4 @@ sqlparse==0.5.3
 tensorboard==2.16.2
 tensorboard-data-server==0.7.2
 tensorflow==2.16.2
+whitenoise==6.6.0
