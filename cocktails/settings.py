@@ -149,11 +149,14 @@ REST_FRAMEWORK = {
 MEDIA_ROOT = BASE_DIR / "media/"
 MEDIA_URL = '/media/'
 
-CORS_ALLOW_ALL_ORIGINS = True
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Add near STATIC_ROOT
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
+]
+
+CORS_ORIGIN_WHITELIST = [
+     'http://localhost:3000'
 ]
