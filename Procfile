@@ -1,1 +1,1 @@
-web: gunicorn cocktails.wsgi --workers=3
+web: python manage.py runserver 0.0.0.0:8000
