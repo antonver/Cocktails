@@ -3,13 +3,12 @@ from django.urls import path, include
 from rest_framework import routers
 
 from cocktails import settings
-from cocktailsApi.views import CocktailsViewSet, PhotoUploadView
+from cocktailsApi.views import CocktailsViewSet
 
 router = routers.DefaultRouter()
 router.register(r'cocktails', CocktailsViewSet)
 
-urlpatterns = [path("", include(router.urls)),
-               path("drunk/", PhotoUploadView.as_view())
+urlpatterns = [path("", include(router.urls))
                ]
 
 app_name = 'cocktailsApi'

@@ -199,32 +199,6 @@ sqlparse==0.5.3
     # via
     #   -r requirements.in
     #   django
-tensorboard==2.16.2
-    # via
-    #   -r requirements.in
-    #   tensorflow
-tensorboard-data-server==0.7.2
-    # via
-    #   -r requirements.in
-    #   tensorboard
-tensorflow==2.16.2
-    # via -r requirements.in
-tensorflow-io-gcs-filesystem==0.37.1
-    # via
-    #   -r requirements.in
-    #   tensorflow
-termcolor==2.5.0
-    # via
-    #   -r requirements.in
-    #   tensorflow
-typing-extensions==4.12.2
-    # via
-    #   -r requirements.in
-    #   asgiref
-    #   optree
-    #   referencing
-    #   rich
-    #   tensorflow
 uritemplate==4.1.1
     # via
     #   -r requirements.in
