@@ -5,14 +5,12 @@ from rest_framework import routers
 from cocktails import settings
 from cocktailsApi.views import CocktailsViewSet, PhotoUploadView
 
-
 router = routers.DefaultRouter()
 router.register(r'cocktails', CocktailsViewSet)
 
-
 urlpatterns = [path("", include(router.urls)),
-        path("drunk", PhotoUploadView.as_view())
-]
+               path("drunk/", PhotoUploadView.as_view())
+               ]
 
 app_name = 'cocktailsApi'
 
