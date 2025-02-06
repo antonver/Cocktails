@@ -23,9 +23,9 @@ Clone the repository to your local machine:
 git clone https://github.com/antonver/Cocktails.git
 cd Cocktails
 2. Download and Add the Keras Model
-Download the Keras model from the link below and add it to the root of the Django project (inside the backend Docker container):
+Download the Keras model from the link below and add it to the root of the Django project :
 
-Download Keras Model
+[Download Keras Model](https://drive.google.com/file/d/1-5glDsZLshMEkofYrW4ammprQb5M-iUT/view?usp=sharing)
 
 3. Setup the Backend
 Navigate to the backend directory and set up the backend environment:
