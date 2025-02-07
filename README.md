@@ -1,89 +1,62 @@
-# Cocktail Selection App
+# Cocktails Project
 
-## Technologies
-- React
-- Tailwind CSS
-- TypeScript
-- Django Test Framework
-- Neural Network Model
+Ce projet est une application Django et React pour explorer et gérer des cocktails.
 
-## Description
-The Cocktail Selection App is a modern and elegant web application designed to help users choose the perfect cocktail for parties or to recover from a hangover. The app features a sleek and responsive design built with React and Tailwind CSS. It integrates a small neural network model capable of detecting objects in images, providing users with cocktail suggestions based on visual input.
+## Installation et Configuration
 
-The backend of the application is powered by Django Test Framework, ensuring robust functionality and smooth user experience. The project is hosted on the DigitalOcean platform.
-
-### http://ns1.digitalocean.com.cocktails.rocks
-
-## Setup
-
-### 1. Clone the Repository
-Clone the repository to your local machine:
-
-```bash
+### 1. Cloner le projet
+```sh
 git clone https://github.com/antonver/Cocktails.git
 cd Cocktails
 ```
 
-### 2. Download and Add the Keras Model
-Download the Keras model from the link below and add it to the root of the Django project (inside the backend Docker container):
+### 2. Télécharger le modèle Keras
+Téléchargez le modèle depuis [ce lien](https://drive.google.com/file/d/1-5glDsZLshMEkofYrW4ammprQb5M-iUT/view?usp=sharing) et ajoutez-le à la racine du projet Django (dans le conteneur backend Docker).
 
-[Download Keras Model](https://drive.google.com/file/d/1-5glDsZLshMEkofYrW4ammprQb5M-iUT/view?usp=sharing)
-
-### 3. Setup the Backend
-Navigate to the backend directory and set up the backend environment:
-
-```bash
+### 3. Configuration du Backend
+```sh
 cd backend
-python3 -m venv venv            # Create a virtual environment
-source venv/bin/activate        # Activate the virtual environment (Linux/macOS)
-pip install -r requirements.txt # Install required dependencies
+python3 -m venv venv  # Créer un environnement virtuel
+source venv/bin/activate  # Activer l'environnement virtuel (Linux/macOS)
+pip install -r requirements.txt  # Installer les dépendances
 ```
 
-Create your `.env` file using the `sample.env` file as an example:
+### 4. Configurer les variables d'environnement
+Créez un fichier `.env` en vous basant sur `sample.env` et remplissez les informations nécessaires.
 
-```bash
-# Create .env file
-touch .env
-```
-
-Then, run database migrations:
-
-```bash
+### 5. Appliquer les migrations de la base de données
+```sh
 python manage.py migrate
 ```
 
-### 4. Setup the Frontend
-Navigate to the frontend directory and install the necessary dependencies:
-
-```bash
-cd ../frontend
-npm install
-```
-
-### 5. Run the Backend Server
-Now, return to the backend directory and run the Django server:
-
-```bash
-cd ../backend
+### 6. Lancer le serveur Django
+```sh
 python manage.py runserver
 ```
 
-### 6. Run the Frontend Server
-Open another terminal window and navigate to the frontend directory:
+## Configuration du Frontend
+```sh
+cd ../frontend  
+npm install  # Installer les dépendances
+```
 
-```bash
+Créez un fichier `.env` en vous basant sur `sample.env` et remplissez les informations nécessaires.
+
+### 7. Lancer l'application frontend
+Ouvrez un autre terminal et exécutez :
+```sh
 cd frontend
-```
-
-Create your `.env` file using the `sample.env` file as an example:
-
-```bash
-# Create .env file
-touch .env
-```
-
-Then, start the frontend development server:
-
-```bash
 npm run dev
 ```
+
+## Chargement de la base de données
+Assurez-vous que le serveur Django est en cours d'exécution, puis exécutez :
+```sh
+python backend/parseApi.py
+```
+Ce script extrait les données de l'API [TheCocktailDB](https://www.thecocktaildb.com/api.php) et les insère dans la base de données.
+
+This website was deployed on DigitalOcean platform: https://ns1.digitalocean.com.cocktails.rocks
+
+
+
