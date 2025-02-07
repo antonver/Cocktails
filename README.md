@@ -58,5 +58,25 @@ Ce script extrait les données de l'API [TheCocktailDB](https://www.thecocktaild
 
 This website was deployed on DigitalOcean platform: https://ns1.digitalocean.com.cocktails.rocks
 
+### The main page:
+<img width="1412" alt="main page" src="https://github.com/user-attachments/assets/35b3dabf-d68f-4b1f-b32d-0df96b7da221" />
+
+### List of cocktails:
+<img width="1412" alt="List of cocktails" src="https://github.com/user-attachments/assets/9d4d8f31-4a29-44f8-8737-f383247fe73d" />
+
+### Cocktails card:
+<img width="1412" alt="Cocktails card" src="https://github.com/user-attachments/assets/b5fe0405-db46-4ec9-93a2-26d914edd447" />
+
+### Rock-paper-scissors game with ML model:
+
+<img width="1412" alt="Rock-paper-scissors game with ML model" src="https://github.com/user-attachments/assets/7caad490-5cfa-4ee1-87b0-50c1f0e1e16f" />
+
+
+
+
+
+
+
+
 
 
